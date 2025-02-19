@@ -1,0 +1,52 @@
+{
+  "name": "figma-text-to-icon",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n plugin,next 'npm run build:plugin -- --watch --define:SITE_URL=\\\"http://localhost:3000\\\"' 'next dev --turbopack'",
+    "start": "next start",
+    "lint": "next lint",
+    "build": "concurrently -n plugin,next 'npm run build:plugin -- --define:SITE_URL=\\\"$npm_package_config_siteURL\\\"' 'next build'",
+    "build:plugin": "esbuild plugin/code.ts --bundle --target=es6 --loader:.svg=text --outfile=plugin/dist/code.js",
+    "build:next": "next build"
+  },
+  "dependencies": {
+    "@figma/plugin-typings": "*",
+    "@radix-ui/react-collapsible": "^1.1.3",
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-popover": "^1.1.6",
+    "@radix-ui/react-select": "^2.1.6",
+    "@radix-ui/react-separator": "^1.1.2",
+    "@radix-ui/react-slot": "^1.1.2",
+    "@radix-ui/react-tooltip": "^1.1.8",
+    "@tailwindcss/postcss": "^4.0.6",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.475.0",
+    "next": "15.1.7",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "replicate": "^1.0.1",
+    "shadcn-ui": "^0.9.4",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "9.1.2",
+    "esbuild": "0.25.0",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.7",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^4.0.6",
+    "typescript": "^5"
+  },
+  "config": {
+    "siteURL": "http://localhost:3000/"
+  }
+}
