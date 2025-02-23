@@ -8,6 +8,7 @@ import {
 import React from "react";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
+import { figmaAPI } from "@/lib/figmaAPI";
 
 function Panel() {
   const [loading, setLoading] = React.useState(false);
@@ -17,17 +18,16 @@ function Panel() {
   const [svgContent, setSvgContent] = React.useState("");
 
   // pass the result to figma
-  const onPasteSVGIntoFigma = () => {
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: "paste-svg",
-          svg: svgContent,
-        },
-        pluginId: "*",
-      },
-      "*"
-    );
+  const onPasteSVGIntoFigma = async () => {
+    const result = await figmaAPI.run((figma, params) => {
+      const { svg } = params;
+      const newSVGNode = figma.createNodeFromSvg(svg);
+      figma.currentPage.appendChild(newSVGNode);
+      figma.currentPage.selection = [newSVGNode];
+      return { nodeId: newSVGNode.id }
+    }, { svg: svgContent });
+
+    console.log(`nodeId: ${result.nodeId}`);
   };
 
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
