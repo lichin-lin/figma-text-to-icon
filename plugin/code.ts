@@ -5,12 +5,13 @@ figma.showUI(`<script>window.location.href = '${SITE_URL}'</script>`, {
   height: 544,
 });
 
-figma.ui.onmessage = (msg) => {
+figma.ui.onmessage = async (msg) => {
   if (msg.type === "EVAL") {
     const { code, id, params } = msg;
     try {
       const fn = eval(code);
-      const result = fn(figma, params);
+      let result = fn(figma, params)
+      if (result instanceof Promise) result = await result
       figma.ui.postMessage({
         type: "EVAL_RESULT",
         id,

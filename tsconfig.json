@@ -20,7 +20,11 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@figma"
+    ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/predictions/route.js"],
   "exclude": ["node_modules", "plugin"]
